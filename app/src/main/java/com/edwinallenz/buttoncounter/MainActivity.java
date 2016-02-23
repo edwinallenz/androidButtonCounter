@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button helloButton;
     private TextView helloText;
+    private int bCounter = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        View.OnClickListener
+        View.OnClickListener buttonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bCounter++;
+                String counterString = "Hello button " + Integer.toString(bCounter) + " time";
+                if(bCounter > 1) counterString += "s";
+                helloText.setText(counterString);
+            }
+        };
+
+        helloButton.setOnClickListener(buttonListener);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast toastMessage = Toast.makeText(this, "Settings tapped", Toast.LENGTH_LONG);
+            Toast toastMessage = Toast.makeText(this, "Settings tapped wit value" +  helloText.getText(), Toast.LENGTH_LONG);
             toastMessage.show();
             return true;
         }
